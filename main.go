@@ -8,7 +8,7 @@ import (
 	"github.com/gorilla/mux"
 )
 type Article struct {
-	Title string `json:"Title"`
+	Title string `json:"title"`
 	Desc string `json:"desc"`
 	Content string `json:"content"`
 }
@@ -34,11 +34,19 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: hello")
 }
 
+func testPostArticles(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello Endpoint Test POST Articles!")
+	fmt.Println("Endpoint Hit: test POST Articles")
+}
+
+
 func handleRequests(){
 	myRouter := mux.NewRouter().StrictSlash(true) 
 	myRouter.HandleFunc("/", homePage)
 	myRouter.HandleFunc("/hello", hello)
-	myRouter.HandleFunc("/articles", allArticles)
+	myRouter.HandleFunc("/articles", allArticles).Methods("GET")
+	myRouter.HandleFunc("/articles", testPostArticles).Methods("POST")
+
 	log.Fatal(http.ListenAndServe(":8081", myRouter)) //why is myRouter not nil?
 }
 func main(){
