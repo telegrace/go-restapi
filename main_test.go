@@ -1,9 +1,11 @@
 package main
 
 import (
-	"testing"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"strings"
+	"testing"
 )
 
 func TestAllArticles(t *testing.T) {
@@ -23,7 +25,11 @@ func TestAllArticles(t *testing.T) {
 
 	// Check the response body is what we expect.
 	expected := `[{"title":"Test Title","desc":"Test Description","content":"Test Content"}]`
-	if rr.Body.String() != expected {
+	fmt.Println(expected)
+	// fmt.Println(rr.Body.String()) // gives extra line 
+	strTrimSpace := strings.TrimSpace(rr.Body.String())
+	fmt.Println(strTrimSpace==expected)
+	if strTrimSpace != expected {
 		t.Errorf("handler returned unexpected body \ngot %v \nwant %v",
 			rr.Body.String(), expected)
 	}

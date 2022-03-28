@@ -20,6 +20,7 @@ func allArticles(w http.ResponseWriter, r *http.Request) {
 	articles:= Articles{
 		Article{Title:"Test Title", Desc: "Test Description", Content: "Test Content"},
 	}
+	// fmt.Println(len(articles)) // prints 1
 	fmt.Println("Endpoint Hit: All Articles Endpoint")
 	json.NewEncoder(w).Encode(articles) //encoding?
 }
